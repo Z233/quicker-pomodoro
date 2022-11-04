@@ -1,51 +1,46 @@
 <script>
-  import StartButton from './components/StartButton.svelte'
-  import TimeInput from './components/TimeInput.svelte'
+  import TasksView from './views/TasksView.svelte'
+  import TimeView from './views/TimeView.svelte'
 
-  const STEP = 15
+  window.onscroll = function () {
+    window.scrollTo(0, 0)
+  }
 
   let mins = 30
-  $: endTimeString = getEndTimeString(mins)
+  let task = ''
+  let next = false
 
-  function getEndTimeString(mins) {
-    const endTimestamp = Date.now() + mins * 60 * 1000
-    const date = new Date(endTimestamp)
-    const endHours = date.getHours()
-    const endMins = date.getMinutes()
-    return `${formatTime(endHours)}:${formatTime(endMins)}`
+  let handleNext = () => {
+    next = true
   }
 
-  function formatTime(value) {
-    return value < 10 ? `0${value}` : value
+  let handleBack = () => {
+    next = false
   }
 
-  let handleIncrese = () => {
-    mins += STEP
-  }
-
-  let handleDecrese = () => {
-    const tempMins = mins - STEP
-    if (tempMins > 0) {
-      mins = tempMins
-    }
+  let handleTaskSelect = (value) => {
+    task = value
   }
 
   let handleStart = () => {
-    // @ts-ignore
-    window.start(mins)
+    window.start(mins, task)
   }
 </script>
 
-<main class="grid place-content-center h-screen w-screen">
-  <div class="flex flex-col items-center space-y-8">
-    <TimeInput
-      bind:mins
-      bind:onIncrease={handleIncrese}
-      bind:onDecrease={handleDecrese}
-    />
-    <div class="text-sm text-gray-800">
-      从现在起，一直到 <span class="font-bold"> {endTimeString}</span>。
-    </div>
-    <StartButton bind:onStart={handleStart} />
+<div
+  class="h-full w-full relative transition duration-300"
+  class:-translate-x-full={next}
+>
+  <div class="grid place-content-center h-full w-full">
+    <TimeView bind:mins onNext={handleNext} />
   </div>
-</main>
+  <div
+    class="grid place-content-center absolute left-full w-full h-full top-0"
+  >
+    <TasksView
+      onBack={handleBack}
+      onTaskSelect={handleTaskSelect}
+      onStart={handleStart}
+    />
+  </div>
+</div>
