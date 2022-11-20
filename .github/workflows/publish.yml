@@ -16,6 +16,10 @@ jobs:
     needs: [build]
 
     steps:
+    
+    - name: download artifact
+      uses: actions/download-artifact@v3
+        
     - name: upload artifact to release
       uses: svenstaro/upload-release-action@v2
       with:
