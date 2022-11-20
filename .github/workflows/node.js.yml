@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "chore-workflows" ]
 
 jobs:
   build:
@@ -47,3 +47,8 @@ jobs:
         run: pnpm install
         
       - run: pnpm build
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: dist
