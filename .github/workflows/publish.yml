@@ -21,11 +21,10 @@ jobs:
       uses: actions/download-artifact@v3
         
     - name: upload artifact to release
-      uses: svenstaro/upload-release-action@v2
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: /home/runner/work/quicker-zen/quicker-zen/artifact
-        asset_name: dist
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "This is my release text"
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        automatic_release_tag: "latest"
+        files: /home/runner/work/quicker-zen/quicker-zen/artifact
+        draft: false
