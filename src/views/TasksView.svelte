@@ -9,8 +9,16 @@
   } from '@rgossiaux/svelte-headlessui'
   import { FocusMode, type Task } from '../types'
   import Plus from '../icons/Plus.svelte'
+  import TaskEditDialog from '../components/TaskEditDialog.svelte'
 
   let selectedTaskId = ''
+  let isEditing = false
+  let editingTask: Task | null = null
+
+  function handleEditClicked(task: Task) {
+    isEditing = true
+    editingTask = task
+  }
 
   const testTasks: Task[] = [
     {
@@ -58,11 +66,23 @@
     >
       {#each tasks as task}
         <RadioGroupOption value={task.id} let:checked>
-          <TaskItem selected={checked} {task} />
+          <TaskItem
+            selected={checked}
+            {task}
+            onEditClicked={handleEditClicked}
+          />
         </RadioGroupOption>
       {/each}
     </RadioGroup>
   </div>
+
+  {#if editingTask}
+    <TaskEditDialog
+      task={editingTask}
+      open={isEditing}
+      onClose={() => (isEditing = false)}
+    />
+  {/if}
 
   <div class="flex justify-between items-center">
     <span

@@ -1,9 +1,16 @@
 <script lang="ts">
   import CheckCircle from '../icons/CheckCircle.svelte'
+  import Edit from '../icons/Edit.svelte'
   import type { Task } from '../types'
 
   export let selected = false
   export let task: Task
+  export let onEditClicked = (task: Task) => {}
+
+  function handleClicked(e: MouseEvent) {
+    onEditClicked(task)
+    e.stopPropagation()
+  }
 </script>
 
 <div
@@ -16,12 +23,13 @@
     <CheckCircle checked={selected} />
   </div>
   <div class="select-none grow">{task.name}</div>
-  <div
+  <button
+    on:click={handleClicked}
     class="hidden group-hover:block w-4 h-4 text-slate-600 relative
       before:absolute before:w-6 before:h-6 before:bg-slate-200 before:top-1/2 before:left-1/2 
       before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-md before:invisible 
       hover:before:visible"
   >
-    <!-- <Edit /> -->
-  </div>
+    <Edit />
+  </button>
 </div>
