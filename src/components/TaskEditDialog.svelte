@@ -15,11 +15,28 @@
   import RoundButton from './RoundButton.svelte'
   import TagEditor from './TagEditor.svelte'
 
-  export let task: Task
+  export let task: Task | null
   export let open = false
-  export let onClose = () => {}
+  export let onClose: () => void
+  export let onSave: (task: Task) => void
+  export let onRemove: (task: Task) => void
 
   let mode
+
+  $: name = task?.name ?? ''
+  $: list = task?.config.list ?? []
+
+  function handleSaveClicked() {
+    onSave({
+      ...task,
+      name,
+      config: {
+        focusMode: mode,
+        ...(mode === FocusMode.none ? {} : { list }),
+      },
+    })
+    onClose()
+  }
 
   const modeOptions = [
     {
@@ -73,7 +90,8 @@
 
           <input
             tabIndex={-1}
-            value={task.name}
+            value={name}
+            on:change={(e) => (name = e.currentTarget.value)}
             class="text-lg outline-none border-b w-full"
           />
 
@@ -118,12 +136,17 @@
           <div
             class="pt-4 flex space-x-4 items-center justify-between"
           >
-            <RoundButton>保&nbsp;存</RoundButton>
-            <span class="text-sm text-slate-500 hover:text-red-500">
+            <RoundButton onClick={handleSaveClicked}
+              >保&nbsp;存</RoundButton
+            >
+            <button
+              on:click={() => onRemove(task)}
+              class="text-sm text-slate-500 hover:text-red-500"
+            >
               <div class="w-4 h-4">
                 <Trash />
               </div>
-            </span>
+            </button>
           </div>
         </div>
       </TransitionChild>
