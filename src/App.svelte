@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FocusMode, type Task } from './types'
-  import TasksView from './views/TasksView.svelte'
+  import TasksView from './views/TaskView.svelte'
   import TimeView from './views/TimeView.svelte'
 
   window.onscroll = function () {
@@ -8,7 +8,7 @@
   }
 
   let mins = 30
-  let next = true
+  let next = false
 
   let handleNext = () => {
     next = true
@@ -37,6 +37,6 @@
     <TimeView bind:mins onNext={handleNext} />
   </div>
   <div class="absolute left-full w-full h-full top-0">
-    <TasksView onStart={handleStart} />
+    <TasksView onStart={handleStart} onBack={handleBack} />
   </div>
 </div>

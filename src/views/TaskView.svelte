@@ -15,6 +15,7 @@
   import { nanoid } from 'nanoid'
 
   export let onStart: (task: Task) => void
+  export let onBack: () => void
 
   const { data, revalidate, mutate } = useSWR('TASKS', {
     fetcher: getTasks,
@@ -130,11 +131,12 @@
   />
 
   <div class="flex justify-between items-center">
-    <span
+    <button
+      on:click={() => onBack()}
       class="text-sm text-slate-400 cursor-pointer hover:text-slate-500"
     >
       ← 返回
-    </span>
+    </button>
     <button
       disabled={!canStart}
       on:click={() =>

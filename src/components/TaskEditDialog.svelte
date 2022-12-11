@@ -144,9 +144,6 @@
           <div
             class="pt-4 flex space-x-4 items-center justify-between"
           >
-            <RoundButton onClick={handleSaveClicked}
-              >保&nbsp;存</RoundButton
-            >
             <button
               on:click={() => onRemove(task)}
               class="text-sm text-slate-500 hover:text-red-500"
@@ -155,6 +152,9 @@
                 <Trash />
               </div>
             </button>
+            <RoundButton onClick={handleSaveClicked}
+              >保&nbsp;存</RoundButton
+            >
           </div>
         </div>
       </TransitionChild>
