@@ -78,7 +78,10 @@
 
           <div class="space-y-4">
             <div>
-              <RadioGroup value={mode}>
+              <RadioGroup
+                value={mode}
+                on:change={(e) => (mode = e.detail)}
+              >
                 <RadioGroupLabel class="text-sm text-slate-600">
                   专注模式
                 </RadioGroupLabel>
@@ -88,11 +91,14 @@
                   >
                     {#each modeOptions as option}
                       <RadioGroupOption
+                        let:checked
                         value={option.value}
                         class="p-1"
                       >
                         <div
-                          class="px-3 py-1 rounded-lg select-none hover:bg-slate-50"
+                          class="px-3 py-1 rounded-lg select-none"
+                          class:bg-white={checked}
+                          class:hover:bg-slate-50={!checked}
                         >
                           <span>{option.label}</span>
                         </div>
