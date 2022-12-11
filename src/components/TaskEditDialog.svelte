@@ -21,8 +21,7 @@
   export let onSave: (task: Task) => void
   export let onRemove: (task: Task) => void
 
-  let mode
-
+  $: mode = task?.config.focusMode ?? FocusMode.none
   $: name = task?.name ?? ''
   $: list = task?.config.list ?? []
 
@@ -77,7 +76,9 @@
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-75"
       >
-        <div class="w-full h-full bg-white rounded-md p-6 space-y-4">
+        <div
+          class="w-full h-full bg-white rounded-md p-6 space-y-4 flex flex-col"
+        >
           <div class="w-full flex justify-between  text-slate-400">
             <span class="text-sm">编辑任务</span>
             <button
@@ -95,7 +96,7 @@
             class="text-lg outline-none border-b w-full"
           />
 
-          <div class="space-y-4">
+          <div class="space-y-4 grow">
             <div>
               <RadioGroup
                 value={mode}
@@ -128,10 +129,17 @@
               </RadioGroup>
             </div>
 
-            <div>
-              <span class="text-sm text-slate-600"> 白名单 </span>
-              <TagEditor />
-            </div>
+            {#if mode !== FocusMode.none}
+              <div>
+                <span class="text-sm text-slate-600">
+                  {mode === FocusMode.whiteList ? '白名单' : '黑名单'}
+                </span>
+                <TagEditor
+                  tags={list}
+                  onChange={(tags) => (list = tags)}
+                />
+              </div>
+            {/if}
           </div>
           <div
             class="pt-4 flex space-x-4 items-center justify-between"

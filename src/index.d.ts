@@ -3,6 +3,11 @@ export {}
 declare global {
   interface Window {
     tasks: string[]
-    start: (mins, task) => any
+    start: (
+      mins,
+      task,
+      whiteList: string[],
+      blackList: string[]
+    ) => any
   }
 }

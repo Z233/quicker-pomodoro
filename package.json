@@ -23,7 +23,6 @@
     "vite-plugin-singlefile": "^0.12.3"
   },
   "dependencies": {
-    "@svelte-drama/swr": "^0.2.8",
     "nanoid": "^4.0.0",
     "sswr": "^1.7.0"
   }

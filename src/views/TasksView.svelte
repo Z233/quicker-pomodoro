@@ -14,6 +14,8 @@
   import { FocusMode, type Task } from '../types'
   import { nanoid } from 'nanoid'
 
+  export let onStart: (task: Task) => void
+
   const { data, revalidate, mutate } = useSWR('TASKS', {
     fetcher: getTasks,
   })
@@ -135,6 +137,8 @@
     </span>
     <button
       disabled={!canStart}
+      on:click={() =>
+        onStart(tasks.find((t) => t.id === selectedTaskId))}
       class="flex px-4 py-1.5 rounded-full hover:opacity-95 text-sm bg-sky-800 text-white disabled:bg-white 
         disabled:text-slate-300 disabled:shadow-[inset_0_0_0_1px] shadow-slate-200 
         disabled:cursor-not-allowed">开始</button

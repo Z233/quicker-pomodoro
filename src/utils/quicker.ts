@@ -1,6 +1,4 @@
-import { swr } from '@svelte-drama/swr'
 import { nanoid } from 'nanoid'
-import { useSWR } from 'sswr'
 import { type Task, FocusMode } from '../types'
 
 const exampleTasks: Task[] = [

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FocusMode, type Task } from './types'
   import TasksView from './views/TasksView.svelte'
   import TimeView from './views/TimeView.svelte'
 
@@ -7,7 +8,6 @@
   }
 
   let mins = 30
-  let task = ''
   let next = true
 
   let handleNext = () => {
@@ -18,12 +18,14 @@
     next = false
   }
 
-  let handleTaskSelect = (value) => {
-    task = value
-  }
-
-  let handleStart = () => {
-    window.start(mins, task)
+  let handleStart = (task: Task) => {
+    const list = task.config.list ?? []
+    window.start(
+      mins,
+      task.name,
+      task.config.focusMode === FocusMode.whiteList ? list : [],
+      task.config.focusMode === FocusMode.blackList ? list : []
+    )
   }
 </script>
 
@@ -35,6 +37,6 @@
     <TimeView bind:mins onNext={handleNext} />
   </div>
   <div class="absolute left-full w-full h-full top-0">
-    <TasksView />
+    <TasksView onStart={handleStart} />
   </div>
 </div>
