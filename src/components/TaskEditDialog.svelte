@@ -13,6 +13,7 @@
   import Cancel from '../icons/Cancel.svelte'
   import Trash from '../icons/Trash.svelte'
   import RoundButton from './RoundButton.svelte'
+  import TagEditor from './TagEditor.svelte'
 
   export let task: Task
   export let open = false
@@ -109,16 +110,20 @@
               </RadioGroup>
             </div>
 
-            <div
-              class="pt-4 flex space-x-4 items-center justify-between"
-            >
-              <RoundButton>保&nbsp;存</RoundButton>
-              <span class="text-sm text-slate-500 hover:text-red-500">
-                <div class="w-4 h-4">
-                  <Trash />
-                </div>
-              </span>
+            <div>
+              <span class="text-sm text-slate-600"> 白名单 </span>
+              <TagEditor />
             </div>
+          </div>
+          <div
+            class="pt-4 flex space-x-4 items-center justify-between"
+          >
+            <RoundButton>保&nbsp;存</RoundButton>
+            <span class="text-sm text-slate-500 hover:text-red-500">
+              <div class="w-4 h-4">
+                <Trash />
+              </div>
+            </span>
           </div>
         </div>
       </TransitionChild>
