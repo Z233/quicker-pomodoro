@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="flex items-center h-20 border border-gray-200 rounded border-b-gray-600"
+  class="flex items-center h-20 border border-gray-200 rounded border-b-gray-600 bg-white"
 >
   <div
     class="h-full border-r border-gray-200 flex flex-col justify-center text-center px-10"

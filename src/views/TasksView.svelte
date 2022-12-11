@@ -1,50 +1,79 @@
-<script>
-  import Divider from '../components/Divider.svelte'
+<script lang="ts">
   import PrimaryButton from '../components/PrimaryButton.svelte'
-  import StartButton from '../components/PrimaryButton.svelte'
-  import TaskRadio from '../components/TaskRadio.svelte'
-  import PlayOutline from '../icons/PlayOutline.svelte'
+  import TaskItem from '../components/TaskItem.svelte'
+  import {
+    RadioGroup,
+    RadioGroupLabel,
+    RadioGroupOption,
+    RadioGroupDescription,
+  } from '@rgossiaux/svelte-headlessui'
+  import { FocusMode, type Task } from '../types'
+  import Plus from '../icons/Plus.svelte'
 
-  let tasks = window.tasks
+  let selectedTaskId = ''
 
-  export let onTaskSelect = (...agrs) => {}
-  export let onBack = () => {}
-  export let onStart = () => {}
+  const testTasks: Task[] = [
+    {
+      id: '1',
+      name: 'Coding',
+      config: {
+        focusMode: FocusMode.none,
+        list: [],
+      },
+    },
+    {
+      id: '2',
+      name: 'SuperMemo',
+      config: {
+        focusMode: FocusMode.none,
+        list: [],
+      },
+    },
+  ]
 
-  let formRef
-
-  let handleFormChanged = () => {
-    const data = new FormData(formRef)
-    const selectedTask = data.get('task')
-    onTaskSelect(selectedTask)
-  }
+  const tasks = testTasks
 </script>
 
-<div class="flex flex-col items-center space-y-8 w-full">
-  <div>想要做点什么呢</div>
-  <div
-    class="border border-gray-200 w-60 rounded-md px-4 p-2 space-y-4"
-  >
-    <form on:change={handleFormChanged} bind:this={formRef}>
-      <fieldset>
-        {#each tasks as task, i}
-          <TaskRadio bind:task />
-          {#if i < tasks.length - 1}
-            <Divider />
-          {/if}
-        {/each}
-      </fieldset>
-    </form>
+<div
+  class="bg-slate-100 h-full w-full px-6 py-4 space-y-4 text-slate-900 relative 
+    flex flex-col"
+>
+  <div class="flex items-center justify-between">
+    <span>选择一个任务</span>
+    <button
+      class="bg-white text-slate-500 rounded p-0.5 border-slate-200 border 
+          hover:opacity-80"
+    >
+      <div class="w-6 h-6">
+        <Plus />
+      </div>
+    </button>
   </div>
-  <div class="text-center">
-    <PrimaryButton onClick={onStart}>
-      <span class="mr-1"><PlayOutline /></span> 开始
-    </PrimaryButton>
+
+  <div class="grow">
+    <RadioGroup
+      class="space-y-3"
+      value={selectedTaskId}
+      on:change={(e) => (selectedTaskId = e.detail)}
+    >
+      {#each tasks as task}
+        <RadioGroupOption value={task.id} let:checked>
+          <TaskItem selected={checked} {task} />
+        </RadioGroupOption>
+      {/each}
+    </RadioGroup>
+  </div>
+
+  <div class="flex justify-between items-center">
     <span
-      on:keypress={onBack}
-      on:click={onBack}
-      class="text-xs text-gray-400 underline mt-4 inline-block cursor-pointer"
-      >← 返回</span
+      class="text-sm text-slate-400 cursor-pointer hover:text-slate-500"
+    >
+      ← 返回
+    </span>
+    <button
+      class="flex px-4 py-1.5 rounded-full hover:opacity-95 text-sm bg-sky-800 text-white disabled:bg-white 
+        disabled:text-slate-300 disabled:shadow-[inset_0_0_0_1px] shadow-slate-200 
+        disabled:cursor-not-allowed">开始</button
     >
   </div>
 </div>
