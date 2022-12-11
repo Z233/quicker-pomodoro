@@ -79,8 +79,8 @@
 </script>
 
 <div
-  class="bg-slate-100 h-full w-full px-6 py-4 space-y-4 text-slate-900 relative 
-    flex flex-col"
+  class="bg-slate-100 h-full w-full py-4 space-y-4 text-slate-900 relative 
+    flex flex-col px-6"
 >
   <div class="flex items-center justify-between">
     <span>选择一个任务</span>
@@ -95,7 +95,10 @@
     </button>
   </div>
 
-  <div class="grow">
+  <div
+    class="grow  overflow-y-hidden hover overflow-y-overlay  scrollbar-thin 
+    scrollbar-thumb-[rgba(0,0,0,0.4)] scrollbar-thumb-rounded-full"
+  >
     {#if tasks}
       <RadioGroup
         class="space-y-3"

@@ -11,3 +11,7 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.hover.overflow-y-overlay:hover {
+  overflow-y: overlay;
+}
