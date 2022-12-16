@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { FocusMode, type Task } from './types'
+  import type { Task } from './types'
+  import { start } from './utils/quicker'
   import TasksView from './views/TaskView.svelte'
+  import TimerView from './views/TimerView.svelte'
   import TimeView from './views/TimeView.svelte'
 
   window.onscroll = function () {
@@ -19,13 +21,7 @@
   }
 
   let handleStart = (task: Task) => {
-    const list = task.config.list ?? []
-    window.start(
-      mins,
-      task.name,
-      task.config.focusMode === FocusMode.whiteList ? list : [],
-      task.config.focusMode === FocusMode.blackList ? list : []
-    )
+    start(task, mins)
   }
 </script>
 

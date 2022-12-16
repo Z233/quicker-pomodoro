@@ -1,31 +1,4 @@
-import { nanoid } from 'nanoid'
-import { type Task, FocusMode } from '../types'
-
-const exampleTasks: Task[] = [
-  {
-    id: nanoid(),
-    name: 'SuperMemo',
-    config: {
-      focusMode: FocusMode['whiteList'],
-      list: ['sm18', 'spotify'],
-    },
-  },
-  {
-    id: nanoid(),
-    name: 'Coding',
-    config: {
-      focusMode: FocusMode['blackList'],
-      list: ['qq'],
-    },
-  },
-  {
-    id: nanoid(),
-    name: 'Free Learning',
-    config: {
-      focusMode: FocusMode['none'],
-    },
-  },
-]
+import { FocusMode, type Task } from '../types'
 
 export async function getTasks() {
   const { tasksData } = await globalThis.$quickerSp('getTasks')
@@ -38,4 +11,19 @@ export async function saveTasks(tasks: Task[]) {
     tasksData: JSON.stringify(tasks),
   })
   return tasks
+}
+
+export function start(task: Task, mins: number) {
+  const taskName = task.name
+  const list = task.config.list
+  const whiteList =
+    task.config.focusMode === FocusMode.whiteList ? list : []
+  const blackList =
+    task.config.focusMode === FocusMode.blackList ? list : []
+  globalThis.$quickerSp('start', {
+    taskName,
+    mins,
+    whiteList,
+    blackList,
+  })
 }
