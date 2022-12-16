@@ -1,8 +1,6 @@
 <script lang="ts">
   import {
     Dialog,
-    DialogTitle,
-    DialogDescription,
     Transition,
     RadioGroup,
     RadioGroupLabel,
@@ -20,6 +18,8 @@
   export let onClose: () => void
   export let onSave: (task: Task) => void
   export let onRemove: (task: Task) => void
+
+  let isNameInputFocus = false
 
   $: mode = task?.config.focusMode ?? FocusMode.none
   $: name = task?.name ?? ''
@@ -92,8 +92,12 @@
           <input
             tabIndex={-1}
             value={name}
+            on:focus={() => (isNameInputFocus = true)}
+            on:blur={() => (isNameInputFocus = false)}
             on:change={(e) => (name = e.currentTarget.value)}
-            class="text-lg outline-none border-b w-full"
+            class="text-lg outline-none w-full border-b shadow-sky-500"
+            class:shadow-[0_1px_0_0]={isNameInputFocus}
+            class:border-sky-500={isNameInputFocus}
           />
 
           <div class="space-y-4 grow">
