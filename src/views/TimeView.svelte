@@ -1,6 +1,5 @@
-<script>
+<script lang="ts">
   import PrimaryButton from '../components/PrimaryButton.svelte'
-  import StartButton from '../components/PrimaryButton.svelte'
   import TimeInput from '../components/TimeInput.svelte'
 
   const STEP = 15
@@ -22,23 +21,28 @@
     return value < 10 ? `0${value}` : value
   }
 
-  let handleIncrese = () => {
+  const handleIncrease = () => {
     mins += STEP
   }
 
-  let handleDecrese = () => {
+  const handleDecrease = () => {
     const tempMins = mins - STEP
     if (tempMins > 0) {
       mins = tempMins
     }
+  }
+
+  const handleChanged = (value: number) => {
+    mins = value
   }
 </script>
 
 <div class="flex flex-col items-center space-y-8 w-full">
   <TimeInput
     bind:mins
-    bind:onIncrease={handleIncrese}
-    bind:onDecrease={handleDecrese}
+    onChange={handleChanged}
+    onIncrease={handleIncrease}
+    onDecrease={handleDecrease}
   />
   <div>
     <div class="text-sm text-gray-800">
