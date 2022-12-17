@@ -16,14 +16,18 @@ jobs:
     needs: [build]
 
     steps:
-    
-    - name: download artifact
-      uses: actions/download-artifact@v3
-        
-    - name: upload artifact to release
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        prerelease: false
-        files: /home/runner/work/quicker-pomodoro/quicker-pomodoro/artifact
-        draft: false
+      - name: download artifact
+        uses: actions/download-artifact@v3
+
+      - name: upload artifact to release
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          prerelease: false
+          files: /home/runner/work/quicker-pomodoro/quicker-pomodoro/artifact
+          draft: false
+
+      - name: publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
