@@ -1,16 +1,42 @@
 <script lang="ts">
-  import type { Task } from './types'
+  import { onMount } from 'svelte'
+  import type { AllMessage, Task } from './types'
   import { start } from './utils/quicker'
   import TasksView from './views/TaskView.svelte'
   import TimerView from './views/TimerView.svelte'
   import TimeView from './views/TimeView.svelte'
 
+  let isStarted = false
+  let mins = 30
+  let next = false
+
+  const showTimer = () => {
+    isStarted = true
+    next = false
+  }
+
+  const handleMessage = (e: MessageEvent<AllMessage>) => {
+    if (e.data.type === 'START') {
+      showTimer()
+    }
+  }
+
+  const handleTimerDone = () => {
+    isStarted = false
+  }
+
+  window.chrome.webview.addEventListener('message', handleMessage)
+
   window.onscroll = function () {
     window.scrollTo(0, 0)
   }
 
-  let mins = 30
-  let next = false
+  onMount(async () => {
+    const { state } = await window.$quickerSp('getState')
+    if (state === 'STARTED') {
+      showTimer()
+    }
+  })
 
   let handleNext = () => {
     next = true
@@ -35,4 +61,8 @@
   <div class="absolute left-full w-full h-full top-0">
     <TasksView onStart={handleStart} onBack={handleBack} />
   </div>
+
+  {#if isStarted}
+    <TimerView onDone={handleTimerDone} />
+  {/if}
 </div>

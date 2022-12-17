@@ -12,3 +12,25 @@ export interface Task {
     list?: string[]
   }
 }
+
+type Message = {
+  type: string
+  payload?: Record<string, any>
+}
+
+interface StartMessage extends Message {
+  type: 'START'
+}
+
+interface DoneMessage extends Message {
+  type: 'DONE'
+}
+
+interface TickMessage extends Message {
+  type: 'TICK'
+  payload: {
+    leftSecs: number
+  }
+}
+
+export type AllMessage = StartMessage | TickMessage | DoneMessage

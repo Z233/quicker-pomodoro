@@ -1,5 +1,39 @@
+<script lang="ts">
+  import type { AllMessage } from '../types'
+
+  export let onDone: () => void
+
+  let leftSecs: number = 0
+
+  const handleMessage = (e: MessageEvent<AllMessage>) => {
+    if (e.data.type === 'TICK') {
+      leftSecs = Math.round(e.data.payload.leftSecs)
+    }
+
+    if (e.data.type === 'DONE') {
+      onDone()
+    }
+  }
+
+  window.chrome.webview.addEventListener('message', handleMessage)
+
+  function formatSecs(value: number) {
+    const mins = Math.floor(value / 60)
+
+    const secsValue = value - mins * 60
+
+    return `${paddingZero(mins)}:${paddingZero(secsValue)}`
+  }
+
+  export function paddingZero(value: number) {
+    return String(value).padStart(2, '0')
+  }
+</script>
+
 <div
-  class="w-full h-full grid place-content-center fixed inset-0 bg-slate-600"
+  class="w-full h-full grid place-content-center fixed inset-0 bg-sky-900"
 >
-  <span class="text-5xl text-slate-50 font-extrabold"> 21:05 </span>
+  <span class="text-5xl text-slate-50 font-extrabold">
+    {formatSecs(leftSecs)}
+  </span>
 </div>
