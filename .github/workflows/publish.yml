@@ -26,8 +26,3 @@ jobs:
           prerelease: false
           files: /home/runner/work/quicker-pomodoro/quicker-pomodoro/artifact
           draft: false
-
-      - name: publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
