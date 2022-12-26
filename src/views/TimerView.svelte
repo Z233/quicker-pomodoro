@@ -15,6 +15,12 @@
     }
   }
 
+  const handleStopClicked = () => {
+    window.$quickerSp('setState', {
+      state: 'IDLE',
+    })
+  }
+
   window.chrome.webview.addEventListener('message', handleMessage)
 
   function formatSecs(value: number) {
@@ -36,4 +42,13 @@
   <span class="text-5xl text-slate-50 font-extrabold">
     {formatSecs(leftSecs)}
   </span>
+  <div
+    class="absolute top-full -translate-y-[175%] left-1/2 -translate-x-1/2"
+  >
+    <button
+      on:click={handleStopClicked}
+      class="text-slate-400 underline text-sm hover:text-white"
+      >STOP</button
+    >
+  </div>
 </div>

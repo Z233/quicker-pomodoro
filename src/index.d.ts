@@ -2,6 +2,7 @@ export {}
 
 type QuickerFunctionMap = {
   getState: () => { state: 'IDLE' | 'STARTED' }
+  setState: void
 }
 
 declare global {
@@ -14,7 +15,8 @@ declare global {
       blackList: string[]
     ) => any
     $quickerSp: <T extends keyof QuickerFunctionMap>(
-      name: T
+      name: T,
+      ...args
     ) => Promise<ReturnType<QuickerFunctionMap[T]>>
   }
 }
