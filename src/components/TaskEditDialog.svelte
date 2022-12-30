@@ -100,7 +100,10 @@
             class:border-sky-500={isNameInputFocus}
           />
 
-          <div class="space-y-4 grow">
+          <div
+            class="space-y-4 grow  overflow-y-hidden hover overflow-y-overlay  scrollbar-thin 
+    scrollbar-thumb-[rgba(0,0,0,0.4)] scrollbar-thumb-rounded-full"
+          >
             <div>
               <RadioGroup
                 value={mode}
