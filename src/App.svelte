@@ -5,6 +5,7 @@
   import TasksView from './views/TaskView.svelte'
   import TimerView from './views/TimerView.svelte'
   import TimeView from './views/TimeView.svelte'
+  import WindowBar from './components/WindowBar.svelte'
 
   let isStarted = false
   let mins = 30
@@ -51,18 +52,21 @@
   }
 </script>
 
-<div
-  class="h-full w-full relative transition duration-300 bg-slate-100"
-  class:-translate-x-full={next}
->
-  <div class="grid place-content-center h-full w-full">
-    <TimeView bind:mins onNext={handleNext} />
-  </div>
-  <div class="absolute left-full w-full h-full top-0">
-    <TasksView onStart={handleStart} onBack={handleBack} />
-  </div>
+<div class='h-full w-full flex flex-col'>
+  <!-- <WindowBar /> -->
+  <div
+    class="grow relative transition duration-300 bg-slate-100"
+    class:-translate-x-full={next}
+  >
+    <div class="grid place-content-center h-full w-full">
+      <TimeView bind:mins onNext={handleNext} />
+    </div>
+    <div class="absolute left-full w-full h-full top-0">
+      <TasksView onStart={handleStart} onBack={handleBack} />
+    </div>
 
-  {#if isStarted}
-    <TimerView onDone={handleTimerDone} />
-  {/if}
+    {#if isStarted}
+      <TimerView onDone={handleTimerDone} />
+    {/if}
+  </div>
 </div>
