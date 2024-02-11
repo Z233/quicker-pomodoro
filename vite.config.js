@@ -28,6 +28,9 @@ export default defineConfig({
         'index': 'entry/index.html',
         'tracker': 'entry/tracker.html',
       },
+      output: {
+        dir: 'dist'
+      }
     },
   },
   root: 'entry',
