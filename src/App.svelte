@@ -5,7 +5,6 @@
   import TasksView from './views/TaskView.svelte'
   import TimerView from './views/TimerView.svelte'
   import TimeView from './views/TimeView.svelte'
-  import WindowBar from './components/WindowBar.svelte'
 
   let isStarted = false
   let mins = 30
@@ -33,8 +32,8 @@
   }
 
   onMount(async () => {
-    const { state } = await window.$quickerSp('getState')
-    if (state === 'STARTED') {
+    const { status } = await window.$quickerSp('getState')
+    if (status === 'ONGOING') {
       showTimer()
     }
   })
@@ -53,7 +52,6 @@
 </script>
 
 <div class='h-full w-full flex flex-col'>
-  <!-- <WindowBar /> -->
   <div
     class="grow relative transition duration-300 bg-slate-100"
     class:-translate-x-full={next}

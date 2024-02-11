@@ -13,6 +13,10 @@ export async function saveTasks(tasks: Task[]) {
   return tasks
 }
 
+export function getState() {
+  return window.$quickerSp('getState')
+}
+
 export function start(task: Task, mins: number) {
   const taskName = task.name
   const list = task.config.list

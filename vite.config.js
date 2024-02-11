@@ -5,7 +5,9 @@ import { viteSingleFile } from 'vite-plugin-singlefile'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte(), viteSingleFile({
+  plugins: [svelte({
+    configFile: path.resolve(__dirname, 'svelte.config.js')
+  }), viteSingleFile({
     useRecommendedBuildConfig: false
   }), {
     name: 'output-everything-to-dist',
@@ -16,7 +18,6 @@ export default defineConfig({
       }
     }
   }],
-  base: undefined,
   build: {
     assetsInlineLimit: 100000000,
     chunkSizeWarningLimit: 100000000,
@@ -28,5 +29,6 @@ export default defineConfig({
         'tracker': 'entry/tracker.html',
       },
     },
-  }
+  },
+  root: 'entry',
 })

@@ -1,8 +1,8 @@
 export {}
 
 type QuickerFunctionMap = {
-  getState: () => { state: 'IDLE' | 'STARTED' }
-  setState: void
+  getStatus: () => 'IDLE' | 'ONGOING'
+  setStatus: void
 }
 
 declare global {

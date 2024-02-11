@@ -1,11 +1,17 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
   import type { AllMessage } from '../types'
+    import { formatSecs } from '../utils/time';
 
   export let onDone: () => void
 
   let leftSecs: number = 0
+  
+  onMount(() => {
+    window.chrome.webview.addEventListener('message', handleMessage)
+  })
 
-  const handleMessage = (e: MessageEvent<AllMessage>) => {
+  function handleMessage(e: MessageEvent<AllMessage>) {
     if (e.data.type === 'TICK') {
       leftSecs = Math.round(e.data.payload.leftSecs)
     }
@@ -15,25 +21,12 @@
     }
   }
 
-  const handleStopClicked = () => {
-    window.$quickerSp('setState', {
-      state: 'IDLE',
+  function handleStopClicked() {
+    window.$quickerSp('setStatus', {
+      status: 'IDLE',
     })
   }
-
-  window.chrome.webview.addEventListener('message', handleMessage)
-
-  function formatSecs(value: number) {
-    const mins = Math.floor(value / 60)
-
-    const secsValue = value - mins * 60
-
-    return `${paddingZero(mins)}:${paddingZero(secsValue)}`
-  }
-
-  export function paddingZero(value: number) {
-    return String(value).padStart(2, '0')
-  }
+  
 </script>
 
 <div

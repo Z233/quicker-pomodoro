@@ -19,7 +19,11 @@ type Message = {
 }
 
 interface StartMessage extends Message {
-  type: 'START'
+  type: 'START',
+  payload: {
+    totalSecs: number
+    taskName: string
+  }
 }
 
 interface DoneMessage extends Message {

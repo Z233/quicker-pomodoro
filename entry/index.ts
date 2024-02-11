@@ -1,5 +1,5 @@
-import './app.css'
-import App from './App.svelte'
+import '../src/app.css'
+import App from '../src/App.svelte'
 
 if (import.meta.env.DEV) {
   window.start = function start(mins, task) {
