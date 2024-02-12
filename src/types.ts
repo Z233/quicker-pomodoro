@@ -27,7 +27,12 @@ interface StartMessage extends Message {
 }
 
 interface DoneMessage extends Message {
-  type: 'DONE'
+  type: 'DONE',
+  payload: {
+    startAt: number
+    taskName: string
+    durationSecs: number
+  }
 }
 
 interface TickMessage extends Message {

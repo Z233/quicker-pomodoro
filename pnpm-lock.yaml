@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  date-fns:
+    specifier: ^3.3.1
+    version: 3.3.1
   nanoid:
     specifier: ^4.0.0
     version: 4.0.0
@@ -21,6 +24,12 @@ devDependencies:
   '@types/gapi':
     specifier: ^0.0.47
     version: 0.0.47
+  '@types/gapi.client.calendar-v3':
+    specifier: ^0.0.4
+    version: 0.0.4
+  '@types/gapi.client.people-v1':
+    specifier: ^0.0.4
+    version: 0.0.4
   '@types/google.accounts':
     specifier: ^0.0.14
     version: 0.0.14
@@ -97,6 +106,27 @@ packages:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: true
 
+  /@maxim_mazurok/gapi.client.calendar-v3@0.0.20240201:
+    resolution: {integrity: sha512-alclM5kgm0m3Hr+QyZCa7pGQESOu4qLWLyUESv4/8YlvBf6GCTE61U/ZBzxNlOSTpFW+yE62/bDIfgy13k5hTw==}
+    dependencies:
+      '@types/gapi.client': 1.0.8
+      '@types/gapi.client.discovery-v1': 0.0.4
+    dev: true
+
+  /@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806:
+    resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
+    dependencies:
+      '@types/gapi.client': 1.0.8
+      '@types/gapi.client.discovery-v1': 0.0.4
+    dev: true
+
+  /@maxim_mazurok/gapi.client.people-v1@0.0.20240207:
+    resolution: {integrity: sha512-DZkHGAeFd2w7aRUhxG5ZokwtA+1eN/o9ADkm8yTYFQW6kUQeu1FH27LZCnoaPSAO2DSJEILJEKEguXYh97xc1g==}
+    dependencies:
+      '@types/gapi.client': 1.0.8
+      '@types/gapi.client.discovery-v1': 0.0.4
+    dev: true
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -157,6 +187,28 @@ packages:
 
   /@tsconfig/svelte@3.0.0:
     resolution: {integrity: sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==}
+    dev: true
+
+  /@types/gapi.client.calendar-v3@0.0.4:
+    resolution: {integrity: sha512-EwXzPhk98ef+esL1R951e3HFeMQSP6hSBv+YBbaAJoOLLRANV2JY5KHOImBSkk7HKt1PiarQGx5BD8+4eHeeIQ==}
+    dependencies:
+      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240201
+    dev: true
+
+  /@types/gapi.client.discovery-v1@0.0.4:
+    resolution: {integrity: sha512-uevhRumNE65F5mf2gABLaReOmbFSXONuzFZjNR3dYv6BmkHg+wciubHrfBAsp3554zNo3Dcg6dUAlwMqQfpwjQ==}
+    dependencies:
+      '@maxim_mazurok/gapi.client.discovery-v1': 0.1.20200806
+    dev: true
+
+  /@types/gapi.client.people-v1@0.0.4:
+    resolution: {integrity: sha512-gn0ET15woQxTWfbmasznFO33oXGQNnQN/WrHLSQnXy+4DlZXUH/DEh05CO2yupsezHIjGS4IYL28Oo6RuWoFNQ==}
+    dependencies:
+      '@maxim_mazurok/gapi.client.people-v1': 0.0.20240207
+    dev: true
+
+  /@types/gapi.client@1.0.8:
+    resolution: {integrity: sha512-qJQUmmumbYym3Amax0S8CVzuSngcXsC1fJdwRS2zeW5lM63zXkw4wJFP+bG0jzgi0R6EsJKoHnGNVTDbOyG1ng==}
     dev: true
 
   /@types/gapi@0.0.47:
@@ -415,6 +467,10 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
     dev: true
+
+  /date-fns@3.3.1:
+    resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
+    dev: false
 
   /debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}

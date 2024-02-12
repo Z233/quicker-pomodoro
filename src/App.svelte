@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import type { AllMessage, Task } from './types'
-  import { start } from './utils/quicker'
-  import TasksView from './views/TaskView.svelte'
-  import TimerView from './views/TimerView.svelte'
-  import TimeView from './views/TimeView.svelte'
+  import { onMount } from "svelte"
+  import { addMinutes, fromUnixTime, addSeconds } from "date-fns"
+  import type { AllMessage, Task } from "./types"
+  import { start } from "./utils/quicker"
+  import TasksView from "./views/TaskView.svelte"
+  import TimerView from "./views/TimerView.svelte"
+  import TimeView from "./views/TimeView.svelte"
+  import User from "./components/GoogleAccount.svelte"
+  import { setToNearestQuarter } from "./utils/time"
 
   let isStarted = false
   let mins = 30
@@ -15,25 +18,59 @@
     next = false
   }
 
-  const handleMessage = (e: MessageEvent<AllMessage>) => {
-    if (e.data.type === 'START') {
+  async function handleMessage(e: MessageEvent<AllMessage>) {
+    if (e.data.type === "START") {
       showTimer()
+    }
+
+    if (e.data.type === "DONE") {
+      isStarted = false
+
+      const { taskName, startAt, durationSecs } = e.data.payload
+
+      const start = fromUnixTime(startAt)
+      const end = addSeconds(start, durationSecs)
+
+      const quarteredStart = setToNearestQuarter(start)
+      const quarteredEnd = setToNearestQuarter(end)
+
+      const response = await gapi.client.calendar.events.insert({
+        calendarId: "primary",
+        resource: {
+          summary: taskName,
+          start: {
+            dateTime: quarteredStart.toISOString(),
+          },
+          end: {
+            dateTime: quarteredEnd.toISOString(),
+          },
+        },
+      })
+
+      if (response.status === 200) {
+        window.$quickerSp("toast", {
+          type: "Success",
+          content: "已同步到谷歌日历",
+        })
+      } else {
+        window.$quickerSp("toast", {
+          type: "Error",
+          content: `同步到谷歌日历失败：${response.statusText}`,
+        })
+      }
     }
   }
 
-  const handleTimerDone = () => {
-    isStarted = false
-  }
-
-  window.chrome.webview.addEventListener('message', handleMessage)
-
-  window.onscroll = function () {
-    window.scrollTo(0, 0)
-  }
-
   onMount(async () => {
-    const { status } = await window.$quickerSp('getState')
-    if (status === 'ONGOING') {
+    window.chrome.webview.addEventListener("message", handleMessage)
+
+    // Disable scroll
+    window.onscroll = function () {
+      window.scrollTo(0, 0)
+    }
+
+    const { status } = await window.$quickerSp("getStatus")
+    if (status === "ONGOING") {
       showTimer()
     }
   })
@@ -51,12 +88,13 @@
   }
 </script>
 
-<div class='h-full w-full flex flex-col'>
+<div class="h-full w-full flex flex-col overflow-hidden">
   <div
     class="grow relative transition duration-300 bg-slate-100"
     class:-translate-x-full={next}
   >
     <div class="grid place-content-center h-full w-full">
+      <User class="absolute right-6 top-4" />
       <TimeView bind:mins onNext={handleNext} />
     </div>
     <div class="absolute left-full w-full h-full top-0">
@@ -64,7 +102,7 @@
     </div>
 
     {#if isStarted}
-      <TimerView onDone={handleTimerDone} />
+      <TimerView />
     {/if}
   </div>
 </div>

@@ -20,6 +20,8 @@
     "@sveltejs/vite-plugin-svelte": "^1.1.0",
     "@tsconfig/svelte": "^3.0.0",
     "@types/gapi": "^0.0.47",
+    "@types/gapi.client.calendar-v3": "^0.0.4",
+    "@types/gapi.client.people-v1": "^0.0.4",
     "@types/google.accounts": "^0.0.14",
     "autoprefixer": "^10.4.13",
     "npm-run-all": "^4.1.5",
@@ -35,6 +37,7 @@
     "vite-plugin-singlefile": "^0.12.3"
   },
   "dependencies": {
+    "date-fns": "^3.3.1",
     "nanoid": "^4.0.0",
     "sswr": "^1.7.0"
   }
