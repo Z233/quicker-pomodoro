@@ -1,12 +1,17 @@
 declare const __DEV__: boolean
 
+export {}
+
 import gapi from "gpi"
 import google from "google.accounts"
 
 type QuickerFunctionMap = {
   getStatus: () => { status: "IDLE" | "ONGOING" }
   setStatus: void
-  toast: (options: { type: "Success" | "Info" | "Warning" | "Error", content: string }) => void
+  toast: (options: {
+    type: "Success" | "Info" | "Warning" | "Error"
+    content: string
+  }) => void
 }
 
 declare global {

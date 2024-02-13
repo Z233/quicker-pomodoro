@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { gapiContext } from "../Provider"
+
   const CLIENT_ID =
     "458149956486-1b55smqeg55lodc1jkbgsof7ouu37chv.apps.googleusercontent.com"
 
@@ -10,7 +12,8 @@
 
   const SCOPES = "https://www.googleapis.com/auth/calendar profile"
 
-  let tokenClient: google.accounts.oauth2.TokenClient
+  const { tokenClientStore, requestAuth } = gapiContext.get()
+
   let gapiInited = false
   let gisInited = false
 
@@ -63,11 +66,13 @@
    * Callback after Google Identity Services are loaded.
    */
   function gisLoaded() {
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      callback: handleAuthDone,
-    })
+    tokenClientStore.set(
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: handleAuthDone,
+      }),
+    )
 
     gisInited = true
   }
@@ -80,22 +85,12 @@
     }
 
     localStorage.setItem("access_token", response.access_token)
-    
+
     fetchProfile()
   }
 
-  /**
-   *  Sign in the user upon button click.
-   */
   function handleAuthRequest() {
-    if (gapi.client.getToken() === null) {
-      // Prompt the user to select a Google Account and ask for consent to share their data
-      // when establishing a new session.
-      tokenClient.requestAccessToken({ prompt: "consent" })
-    } else {
-      // Skip display of account chooser and consent dialog for an existing session.
-      tokenClient.requestAccessToken({ prompt: "" })
-    }
+    requestAuth()
   }
 </script>
 
